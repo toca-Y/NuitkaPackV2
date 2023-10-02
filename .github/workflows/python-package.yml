@@ -46,8 +46,9 @@ jobs:
           python pack_pack.py
       - name: Commit and push .pyd files
         run: |
+          git pull
           git add packPyds/*.pyd
           git commit -m "Add generated .pyd files"
-          git push --force
+          git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
