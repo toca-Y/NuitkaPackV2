@@ -38,6 +38,14 @@ jobs:
     - name: To pack pyd
       run:
         python pack_pack.py
+    - name: Commit and push .pyd files
+      run: |
+        git add packPyds/*
+        git commit -m "Add generated .pyd files"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     # - name: Lint with flake8
     #   run: |
     #     # stop the build if there are Python syntax errors or undefined names
