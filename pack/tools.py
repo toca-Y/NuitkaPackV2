@@ -11,6 +11,5 @@ def copy(src, dst):
     if p_src.is_file():
         shutil.copy(src, dst)
     else:
-        print(src, dst)
         shutil.copytree(src, dst, dirs_exist_ok=True)
 

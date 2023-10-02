@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 
 from pack.get_library_depand import get_version, get_dependencies, get_top_level_name
-from pack.pack_library.to_pack import get_pyd_file, get_dll_file
+from pack.to_pack import get_pyd_file, get_dll_file
 from pack.setting import Default_module_dir
 from pack.tools import copy
 
@@ -99,7 +99,7 @@ class Library:
                 ok = input('当前不存在{self.name}的dll文件, 是否要生成0(否), 1(是):')
                 if ok != '1':
                     return
-            print(f'{self} 获取模块dll文件中')
+            print(f'\n{self} 获取模块dll文件中')
             lib_dll_dir = get_dll_file(self.library_name)
             for file in Path(lib_dll_dir).rglob('*'):
                 p_file = file
@@ -127,7 +127,7 @@ class Library:
                 ok = input('当前不存在{self.name}的pyd文件, 是否要生成0(否), 1(是):')
                 if ok != '1':
                     return
-            print(f'{self} 打包模块pyd文件中')
+            print(f'\n{self} 打包模块pyd文件中')
             pyd_file.parent.mkdir(parents=True, exist_ok=True)
             file = get_pyd_file(self.library_name)
             copy(file, pyd_file)
