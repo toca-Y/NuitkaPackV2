@@ -19,10 +19,10 @@ jobs:
         python-version: ["3.6", "3.7", "3.8", "3.9", "3.10", "3.11"]
     
     steps:
-    - name: Set up MinGW
-      uses: egor-tensin/setup-mingw@v2.2.0
-      with:
-        platform: x64
+    # - name: Set up MinGW
+    #   uses: egor-tensin/setup-mingw@v2.2.0
+    #   with:
+    #     platform: x64
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
@@ -38,6 +38,14 @@ jobs:
     - name: To pack pyd
       run:
         python pack_pack.py
+    - name: Commit and push .pyd files
+      run: |
+        git add packPyds/*
+        git commit -m "Add generated .pyd files"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     # - name: Lint with flake8
     #   run: |
     #     # stop the build if there are Python syntax errors or undefined names
