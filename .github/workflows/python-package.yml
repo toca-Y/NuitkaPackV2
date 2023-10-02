@@ -26,9 +26,9 @@ jobs:
       #   with:
       #     platform: x64
       - name: Set Git user information
-          run: |
-            git config --global user.email "1459229119@qq.com"
-            git config --global user.name "toca-Y"
+        run: |
+          git config --global user.email "1459229119@qq.com"
+          git config --global user.name "toca-Y"
 
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
