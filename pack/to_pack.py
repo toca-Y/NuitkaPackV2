@@ -206,7 +206,7 @@ def to_pack_library_pyd(library_name):
     # return files[0]
 
 
-def pack_module(file, module_name=None, output_dir=None, with_mingw=True):
+def pack_module(file, module_name=None, output_dir=None, with_mingw=True, remove_build=False):
     if not module_name:
         module_name = Path(file).stem
     if not output_dir:
@@ -217,6 +217,7 @@ def pack_module(file, module_name=None, output_dir=None, with_mingw=True):
     pack_cmd = f"""
                 nuitka
                 {"--mingw" if with_mingw else ""}
+                {"--remove-output" if remove_build else ""}
                 --module
                 --show-progress
                 --output-dir={output_dir}
