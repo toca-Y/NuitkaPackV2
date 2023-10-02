@@ -18,7 +18,7 @@ def run_cmd(cmd):
         replace('\n', ' ').replace('  ', ' '). \
         replace('  ', ' ').replace('  ', ' ').replace('  ', ' ')
     # print(cmd)
-    process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True, text=True)
+    process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
     a_time = time.time()
     while process.poll() is None:
         # 读取标准输出和标准错误流的输出
