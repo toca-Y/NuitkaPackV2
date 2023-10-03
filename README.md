@@ -4,6 +4,11 @@
 
 原理: 分模块打包
 
+## Installer
+```python
+pip install NuFaster -i https://pypi.org/simple/
+```
+
 ## Demo
 
 Run "toPack-main1002.py" toPack -> "main1002.py"
@@ -37,6 +42,5 @@ to_pack_main(
         mingw=True,         # 
 )
 ```
-
 
 ## 
