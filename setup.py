@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-        name='NuSpeed',  # 包的名称
+        name='NuFaster',  # 包的名称
         version='0.0.1',  # 版本号
         author='toca-Y',  # 作者名字
         author_email='',  # 作者邮箱

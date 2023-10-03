@@ -6,9 +6,9 @@ import sys
 import time
 from pathlib import Path
 from nuitka import Version
-from NuitkaPack.nuitka_parser import np_parser
-from NuitkaPack.setting import Default_build_dir
-from NuitkaPack.tools import copy
+from NuFaster.nuitka_parser import np_parser
+from NuFaster.setting import Default_build_dir
+from NuFaster.tools import copy
 
 pack_py = f'{__file__}/../pack_library.py'
 Build_dir = Default_build_dir
@@ -52,7 +52,7 @@ def get_base_dir():
 
 
 def get_dll_file(library_name, reload=False):
-    from NuitkaPack.get_library_dll import Library
+    from NuFaster.get_library_dll import Library
     library = Library(library_name)
     library_name = library.name
     
@@ -117,7 +117,7 @@ def get_library_init_import(library_name):
 
 
 def get_library_imports(library_name):
-    from NuitkaPack.get_library_dll import Library
+    from NuFaster.get_library_dll import Library
     library = Library(library_name)
     
     library_file = Path(library.library_file)
@@ -163,7 +163,7 @@ def to_pack_main(main_py, dependent_libs=None, output_dir=None, **kwargs):
     dependent_list = []
     dependent_names = []
     
-    from NuitkaPack.get_library_dll import Library
+    from NuFaster.get_library_dll import Library
     
     if dependent_libs:
         for lib in dependent_libs:
@@ -190,7 +190,7 @@ def to_pack_main(main_py, dependent_libs=None, output_dir=None, **kwargs):
 
 
 def to_pack_library_pyd(library_name):
-    from NuitkaPack.get_library_dll import Library
+    from NuFaster.get_library_dll import Library
     library = Library(library_name)
     library_name = library.name
     library_file = Path(library.library_file)

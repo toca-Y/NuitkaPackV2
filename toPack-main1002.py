@@ -1,6 +1,6 @@
-from NuitkaPack.to_pack import to_pack_main
+from NuFaster.to_pack import to_pack_main
 
-from NuitkaPack import set_save_dir
+from NuFaster import set_save_dir
 
 set_save_dir(r'OutputDir')
 
