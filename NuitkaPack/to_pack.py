@@ -61,7 +61,7 @@ def get_dll_file(library_name, reload=False):
         f.write(f'import {library_name}\n')
         f.write(f'print("import {library_name}")')
     
-    dll_dir = Path(Build_dir, ).joinpath(library.name, library.version, 'Dll')
+    dll_dir = Path(Build_dir).joinpath(library.name, library.version, 'Dll')
     if dll_dir.exists() and not reload:
         return dll_dir
     kwargs = {
@@ -158,6 +158,7 @@ def to_pack_main(main_py, dependent_libs=None, output_dir=None, **kwargs):
     kwargs.get('mingw', False)
     kwargs.get('standalone', False)
     kwargs.get('show_progress', False)
+    kwargs.get('windows_icon_from_ico', False)
     
     dependent_list = []
     dependent_names = []

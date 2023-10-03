@@ -90,7 +90,7 @@ class Library:
     
     @property
     def dll_dir(self):
-        dll_dir = Path(Default_module_dir).joinpath(py_version, self.name, str(self.version), 'Dll')
+        dll_dir = Path(Default_module_dir.str()).joinpath(py_version, self.name, str(self.version), 'Dll')
         if dll_dir.exists():
             return dll_dir
         else:

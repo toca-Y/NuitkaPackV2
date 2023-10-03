@@ -1,10 +1,17 @@
-pack_root = f'{__file__}/../pack_dir/Record1'
-
-Default_build_dir = fr'{pack_root}\Build'  # 默认打包路径
-Default_module_dir = fr'{pack_root}\Module'  # 默认打包路径
-
-Default_run_dir = fr'{pack_root}\Run'  # 默认运行路径
-Default_history_dir = fr'{pack_root}\History'  # 默认打包之后文件记录位置
+pack_root = f'{__file__}/../pack_dir/Record'
 
 
+class Dir(str):
+    
+    def __init__(self, sub_dir):
+        self.sub_dir = sub_dir
+    
+    def str(self):
+        return self.__str__()
+    
+    def __str__(self):
+        return fr'{pack_root}\{self.sub_dir}'
 
+
+Default_build_dir = Dir('Build')  # 默认打包路径
+Default_module_dir = Dir('Module')  # 默认打包路径
