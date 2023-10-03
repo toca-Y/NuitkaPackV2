@@ -1,4 +1,6 @@
-pack_root = f'{__file__}/../pack_dir/Record'
+from pathlib import Path
+
+pack_root = Path().joinpath('pack_dir/Record')
 
 
 class Dir(str):

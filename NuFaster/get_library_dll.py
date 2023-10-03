@@ -83,7 +83,7 @@ class Library:
     @property
     def dependenciesName(self):
         res_list = []
-        dependencies = get_dependencies(self.name)
+        dependencies = get_dependencies(self.library_name)
         for lib in dependencies:
             res_list.append(get_top_level_name(lib))
         return res_list

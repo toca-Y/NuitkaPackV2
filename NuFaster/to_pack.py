@@ -51,7 +51,7 @@ def get_base_dir():
     return p_dir
 
 
-def get_dll_file(library_name, reload=False):
+def get_dll_file(library_name, reload=False, del_py=True):
     from NuFaster.get_library_dll import Library
     library = Library(library_name)
     library_name = library.name
@@ -64,19 +64,22 @@ def get_dll_file(library_name, reload=False):
     dll_dir = Path(Build_dir).joinpath(library.name, library.version, 'Dll')
     if dll_dir.exists() and not reload:
         return dll_dir
-    kwargs = {
-        
-        "--include-module"  : library_name,
-        "--nofollow-imports": True
-    }
-    # other_cmd = f' \n --include-module={library_name} --nofollow-imports'
-    if library.dependencies:
-        kwargs['-nofollow-import-to'] = [*library.dependenciesName, f"{library_name}.tests", f"{library_name}.*.tests"]
-        # other_cmd += f'\n--nofollow-import-to={",".join(library.dependenciesName)},{library_name}.tests,{library_name}.*.tests '
     
-    dist_dir = to_pack(pack_py, output_dir=Build_dir, standalone=True, **kwargs)
+    # nofollow_list = []
+    # if p_file.is_dir():
+    #     if p_file.joinpath('tests').is_dir():
+    #         nofollow_list.append(f"{module_name}.tests")
+    #     for item in p_file.iterdir():
+    #         if item.is_dir() and item.joinpath('tests').is_dir():
+    #             nofollow_list.append(f"{module_name}.{item.stem}.tests")
+    # nofollow_info = ','.join(nofollow_list)
     
-    if Path(pack_py).exists():
+    kwargs = {"--include-module"   : library_name,
+              "--nofollow-imports" : True,
+              '-nofollow-import-to': [*library.dependenciesName, f"{library_name}.tests.*", f"{library_name}.*.tests.*"]}
+    
+    dist_dir = to_pack(pack_py, output_dir=Build_dir, standalone=True, show_progress=True, **kwargs)
+    if Path(pack_py).exists() and del_py:
         try:
             Path(pack_py).unlink(missing_ok=True)
         except:
@@ -89,7 +92,8 @@ def get_dll_file(library_name, reload=False):
             file_list.remove(file)
         elif file in ['python3.dll']:
             file_list.remove(file)
-    # print(file_list)
+    
+    print(file_list)
     
     for file in file_list:
         p_file = Path(dist_dir).joinpath(file)
@@ -168,14 +172,12 @@ def to_pack_main(main_py, dependent_libs=None, output_dir=None, **kwargs):
     if dependent_libs:
         for lib in dependent_libs:
             dependent_list.append(Library(lib))
-    
     for lib in dependent_list:
         print(f'加载库文件{lib}')
         dll = lib.dll_dir
         pyd = lib.pyd
         lib.check_dependencies()
         dependent_names.append(lib.name)
-    
     kwargs['nofollow_import_to'] = dependent_names
     dist_dir = to_pack(main_py, output_dir=output_dir, **kwargs)
     for lib in dependent_list:
@@ -230,7 +232,15 @@ def pack_module(file, module_name=None, output_dir=None, with_mingw=True, remove
         output_dir = Path('NuitkaPackDir').joinpath(module_name)
     
     pyd_name = f'{module_name}.cp{sys.winver.replace(".", "")}*.pyd'
-    
+    p_file = Path(file)
+    nofollow_list = []
+    if p_file.is_dir():
+        if p_file.joinpath('tests').is_dir():
+            nofollow_list.append(f"{module_name}.tests")
+        for item in p_file.iterdir():
+            if item.is_dir() and item.joinpath('tests').is_dir():
+                nofollow_list.append(f"{module_name}.{item.stem}.tests")
+    nofollow_info = ','.join(nofollow_list)  # {f"--nofollow-import-to={nofollow_info}" if nofollow_info else ""}
     pack_cmd = f"""
                 nuitka
                 {"--mingw" if with_mingw else ""}
@@ -239,7 +249,7 @@ def pack_module(file, module_name=None, output_dir=None, with_mingw=True, remove
                 --show-progress
                 --output-dir={output_dir}
                 --include-module={module_name}
-                --nofollow-import-to={module_name}.tests,{module_name}.*.tests
+                --nofollow-import-to={module_name}.tests.*,{module_name}.*.tests.*
                 {file}
     """
     
@@ -263,4 +273,5 @@ if __name__ == '__main__':
     """
     Main run
     """
-    get_dll_file('urllib3', reload=True)
+    # get_dll_file('opencv-python', reload=True, del_py=False)
+    get_pyd_file('opencv-python')
