@@ -4,7 +4,7 @@ from pathlib import Path
 
 from NuitkaPack.get_library_depand import get_version, get_dependencies, get_top_level_name
 from NuitkaPack.to_pack import get_pyd_file, get_dll_file
-# from NuitkaPack.setting import Default_module_dir
+from NuitkaPack.setting import Default_module_dir
 from NuitkaPack.tools import copy
 
 py_version = sys.winver
