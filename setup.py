@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
         name='NuFaster',  # 包的名称
-        version='0.0.1',  # 版本号
+        version='0.0.3',  # 版本号
         author='toca-Y',  # 作者名字
         author_email='',  # 作者邮箱
         description='借助nuitka更快的打包(分模块打包)',  # 包的简短描述

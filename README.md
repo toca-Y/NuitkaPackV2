@@ -6,7 +6,7 @@
 
 ## Installer
 ```python
-pip install NuFaster -i https://pypi.org/simple/
+pip install NuFaster
 ```
 
 ## Demo

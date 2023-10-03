@@ -163,6 +163,8 @@ def to_pack_main(main_py, dependent_libs=None, output_dir=None, **kwargs):
     kwargs.get('standalone', False)
     kwargs.get('show_progress', False)
     kwargs.get('windows_icon_from_ico', False)
+    follow_import_to = kwargs.get('follow_import_to', [])
+    include_module = kwargs.get('include_module', [])
     
     dependent_list = []
     dependent_names = []
@@ -174,6 +176,8 @@ def to_pack_main(main_py, dependent_libs=None, output_dir=None, **kwargs):
             dependent_list.append(Library(lib))
     for lib in dependent_list:
         print(f'加载库文件{lib}')
+        if lib.name in follow_import_to or lib.name in include_module:
+            continue
         dll = lib.dll_dir
         pyd = lib.pyd
         lib.check_dependencies()
