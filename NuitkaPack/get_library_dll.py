@@ -2,12 +2,11 @@ import shutil
 import sys
 from pathlib import Path
 
-from pack.get_library_depand import get_version, get_dependencies, get_top_level_name
-from pack.to_pack import get_pyd_file, get_dll_file
-from pack.setting import Default_module_dir
-from pack.tools import copy
+from NuitkaPack.get_library_depand import get_version, get_dependencies, get_top_level_name
+from NuitkaPack.to_pack import get_pyd_file, get_dll_file
+# from NuitkaPack.setting import Default_module_dir
+from NuitkaPack.tools import copy
 
-Default_module_dir
 py_version = sys.winver
 
 
@@ -149,4 +148,3 @@ if __name__ == '__main__':
     # pyd_ = library.pyd
     # print(pyd_, pyd_.exists())
     # library.check_dependencies()
-

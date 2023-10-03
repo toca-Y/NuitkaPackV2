@@ -6,8 +6,8 @@ import sys
 import time
 from pathlib import Path
 
-from pack.setting import Default_build_dir
-from pack.tools import copy
+from NuitkaPack.setting import Default_build_dir
+from NuitkaPack.tools import copy
 
 pack_py = f'{__file__}/../pack_library.py'
 Build_dir = Default_build_dir
@@ -21,9 +21,7 @@ def run_cmd(cmd):
     process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
     a_time = time.time()
     while process.poll() is None:
-        # 读取标准输出和标准错误流的输出
         stdout_line = process.stdout.readline()
-        # stderr_line = process.stderr.readline()
         
         if stdout_line:
             print(f"\rCMD Running: \033[91m{stdout_line.strip()}\033[0m"[:200], end=' ')
@@ -51,7 +49,7 @@ def get_base_dir():
 
 
 def get_dll_file(library_name, reload=False):
-    from pack.get_library_dll import Library
+    from NuitkaPack.get_library_dll import Library
     library = Library(library_name)
     library_name = library.name
     
@@ -110,7 +108,7 @@ def get_library_init_import(library_name):
 
 
 def get_library_imports(library_name):
-    from pack.get_library_dll import Library
+    from NuitkaPack.get_library_dll import Library
     library = Library(library_name)
     
     library_file = Path(library.library_file)
@@ -143,7 +141,7 @@ def to_pack(output_dir, pack_file, other_cmd=None):
 def to_pack_main(main_py, dependent_libs=None, output_dir=None):
     dependent_list = []
     dependent_names = []
-    from pack.get_library_dll import Library
+    from NuitkaPack.get_library_dll import Library
     
     if dependent_libs:
         for lib in dependent_libs:
@@ -174,7 +172,7 @@ def to_pack_main(main_py, dependent_libs=None, output_dir=None):
 
 
 def to_pack_library_pyd(library_name):
-    from pack.get_library_dll import Library
+    from NuitkaPack.get_library_dll import Library
     library = Library(library_name)
     library_name = library.name
     library_file = Path(library.library_file)
@@ -184,6 +182,7 @@ def to_pack_library_pyd(library_name):
         pass
     output_dir = Path(Build_dir).joinpath(str(library_name), library.version)
     return pack_module(library_file, library_name, output_dir)
+    
     # pyd_name = f'{library_name}.cp{sys.winver.replace(".", "")}*.pyd'
     #
     # pack_cmd = f"""
@@ -236,19 +235,10 @@ def pack_module(file, module_name=None, output_dir=None, with_mingw=True, remove
 
 
 def compare_folders(folder1, folder2):
-    # 使用 filecmp 模块来比较两个文件夹
     dcmp = filecmp.dircmp(folder1, folder2)
-    # dcmp.report()
-    # 获取不同的文件列表
     different_files = dcmp.right_only
     
     return different_files
-
-
-def get_dir_difference(dir1, dir2, out1=False, out2=False, ):
-    for file in Path(dir1).iterdir():
-        pass
-    pass
 
 
 if __name__ == '__main__':
@@ -256,4 +246,3 @@ if __name__ == '__main__':
     Main run
     """
     get_dll_file('urllib3', reload=True)
-    # to_pack_library_pyd('numpy')
